@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mvvmnewsapp.R
 import com.example.mvvmnewsapp.data.model.Article
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import com.example.mvvmnewsapp.databinding.FragmentBreakingNewsBinding
+import com.example.mvvmnewsapp.databinding.ItemArticlePreviewBinding
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
+    inner class ArticleViewHolder(val binding: ItemArticlePreviewBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // this code for make sure the article post not the same and android studio handle it simple ..... so good
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
@@ -31,24 +32,26 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_article_preview, parent, false)
-        return ArticleViewHolder(view)
+        return ArticleViewHolder(
+            ItemArticlePreviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(article.urlToImage).into(ivArticleImage)
-            tvSource.text = article.source.name
-            tvTitle.text = article.title
-            tvDescription.text = article.description
-            tvPublishedAt.text = article.publishedAt
-
-            setOnItemClickListener {
-                onItemClickListener?.let { it(article) }
-            }
+            Glide.with(this).load(article.urlToImage).into(holder.binding.ivArticleImage)
+            holder.binding.tvSource.text = article.source?.name
+            holder.binding.tvTitle.text = article.title
+            holder.binding.tvDescription.text = article.description
+            holder.binding.tvPublishedAt.text = article.publishedAt
+             holder.itemView.setOnClickListener {
+                 onItemClickListener?.let { it(article) }
+             }
         }
     }
 
@@ -61,6 +64,5 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
-
 
 }

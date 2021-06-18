@@ -3,12 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/news_nav_graph"
-    app:startDestination="@id/articleFragment">
+    app:startDestination="@id/breakingNewsFragment">
 
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.example.mvvmnewsapp.ui.fragment.ArticleFragment"
-        android:label="ArticleFragment" />
+        android:label="ArticleFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.example.mvvmnewsapp.data.model.Article"
+            />
+    </fragment>
     <fragment
         android:id="@+id/savedNewsFragment"
         android:name="com.example.mvvmnewsapp.ui.fragment.SavedNewsFragment"

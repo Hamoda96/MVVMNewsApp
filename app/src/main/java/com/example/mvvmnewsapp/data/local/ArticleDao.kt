@@ -1,12 +1,10 @@
 package com.example.mvvmnewsapp.data.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.mvvmnewsapp.data.model.Article
 
+@Dao
 interface ArticleDao {
     // onConflict this work when you have two same news post make a replace
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -17,4 +15,6 @@ interface ArticleDao {
 
     @Delete
     suspend fun deleteArticle(article: Article)
+
+
 }

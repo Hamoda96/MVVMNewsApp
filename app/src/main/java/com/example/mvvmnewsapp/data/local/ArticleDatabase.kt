@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.mvvmnewsapp.data.model.Article
 
 @Database(
-    entities = [Article::class], version = 1
+    entities = [Article::class], version = 1, exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase() {
