@@ -27,10 +27,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -73,7 +69,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 val position = viewHolder.adapterPosition
                 val article = newsAdapter.differ.currentList[position]
                 viewModel.deleteArticle(article)
-                Snackbar.make(view!!, "Successfully delete Article", Snackbar.LENGTH_SHORT).apply {
+                Snackbar.make(view, "Successfully delete Article", Snackbar.LENGTH_SHORT).apply {
                     setAction("Undo") {
                         viewModel.saveArticle(article)
                     }
